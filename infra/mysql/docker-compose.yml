@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql:8.0
+    #    restart: always
+    volumes:
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=realcoding
+      - MYSQL_PASSWORD=1q2w3e4r!@
+      - MYSQL_DATABASE=realcoding
