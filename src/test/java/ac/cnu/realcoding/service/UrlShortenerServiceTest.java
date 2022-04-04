@@ -62,7 +62,7 @@ public class UrlShortenerServiceTest {
         given(urlRepository.findById(eq(pk))).willReturn(Mono.just(urlInformation));
 
         // when
-        URI res = shortenerService.unshortenUrl("FLKX").block();
+        URI res = (URI) shortenerService.unshortenUrl("FLKX").block();
 
         // then
         assertThat(res.toString()).isEqualTo(domain);
