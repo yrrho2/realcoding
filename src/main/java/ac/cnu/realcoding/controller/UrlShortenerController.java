@@ -14,6 +14,8 @@ import ac.cnu.realcoding.models.UrlShortenerResponse;
 import ac.cnu.realcoding.service.UrlShortenerService;
 import reactor.core.publisher.Mono;
 
+import java.net.URI;
+
 @RestController
 @RequestMapping("/")
 public class UrlShortenerController {
@@ -27,8 +29,22 @@ public class UrlShortenerController {
     @GetMapping("health")
     public Mono<String> healthCheck() {
         // For basic tutorial
+
         return Mono.just("Hello World");
     }
+
+    private Mono<Integer> fib(int n){
+        if(n==0){
+            return Mono.just(0);
+        }
+        if(n==1){
+            return Mono.just(1);
+        }
+        Mono<Integer> f0 = fib(n-1);
+        Mono<Integer> f1 = fib(n-2);
+        return (Mono.zip(f0, f1, (n0, n1)-> n0 + n1));
+    }
+
 
     @GetMapping("{encoded}")
     public Mono<ResponseEntity<Object>> unshorten(@PathVariable String encoded) {
@@ -38,7 +54,7 @@ public class UrlShortenerController {
         return urlShortenerService
                 .unshortenUrl(encoded)
                 .map(uri -> ResponseEntity.status(HttpStatus.FOUND)
-                                          .location(uri)
+                                          .location((URI) uri)
                                           .build())
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
