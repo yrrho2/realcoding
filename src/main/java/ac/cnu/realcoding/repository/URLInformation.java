@@ -8,7 +8,9 @@ import lombok.Data;
 public class URLInformation {
     @Id
     private Long id;
+    private String url;
 
     public URLInformation(String url) {
+        this.url = url;
     }
 }

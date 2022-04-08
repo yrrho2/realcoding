@@ -25,6 +25,7 @@ public class UrlShortenerService {
         // Problem A: Decode encoded String
         // Problem B: Get full url by querying decoded PK.
         // Problem C: if encoded string is invalid or not found return Bad Request
+<<<<<<< HEAD
 
         /*
         return Mono.just(Base62Processor.decode(encoded))
@@ -33,6 +34,12 @@ public class UrlShortenerService {
                 .map(URI::create);
         */
         return Mono.error(new UnsupportedOperationException("not implemented"));
+=======
+        return Mono.just(Base62Processor.decode(encoded))
+                .flatMap(decoded -> urlRepository.findById(decoded))
+                .map(URLInformation::getUrl)
+                .map(URI::create);
+>>>>>>> upstream/team-11
     }
 
     public Mono<UrlShortenerResponse> shortenUrl(UrlShortenerRequest urlShortenerRequest) {
@@ -40,9 +47,12 @@ public class UrlShortenerService {
         // Problem B: Insert to database and get PK from database, PK should be auto-generated integer.
         // Problem C: Encode PK by using Base 63.
         // Problem D: Build UrlShortenerResponse with server host and port.
+<<<<<<< HEAD
 
 
         /*
+=======
+>>>>>>> upstream/team-11
         String url = urlShortenerRequest.getUrl();
         return urlRepository.save(new URLInformation(url))
                 .map(URLInformation::getId)
@@ -50,11 +60,18 @@ public class UrlShortenerService {
                 .map(encoded -> UriComponentsBuilder.newInstance()
                         .scheme("http")
                         .host(applicationConfig.getHost())
+<<<<<<< HEAD
                         .port(encoded)
                         .toUriString())
                 .map(UrlShortenerResponse::of);
 */
         return Mono.error(new UnsupportedOperationException("not implemented"));
 
+=======
+                        .port(applicationConfig.getPort())
+                        .path(encoded)
+                        .toUriString())
+                .map(UrlShortenerResponse::of);
+>>>>>>> upstream/team-11
     }
 }

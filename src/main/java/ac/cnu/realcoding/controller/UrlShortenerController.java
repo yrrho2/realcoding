@@ -26,23 +26,35 @@ public class UrlShortenerController {
         this.urlShortenerService = urlShortenerService;
     }
 
-    @GetMapping("health")
-    public Mono<String> healthCheck() {
+    @GetMapping("health/{n}")
+    public Mono<String> healthCheck(@PathVariable int n) {
         // For basic tutorial
+<<<<<<< HEAD
 
         return Mono.just("Hello World");
+=======
+        return fib(n).map(String::valueOf);
+>>>>>>> upstream/team-11
     }
 
     private Mono<Integer> fib(int n){
         if(n==0){
             return Mono.just(0);
         }
+<<<<<<< HEAD
         if(n==1){
+=======
+        if(n==1||n==2){
+>>>>>>> upstream/team-11
             return Mono.just(1);
         }
         Mono<Integer> f0 = fib(n-1);
         Mono<Integer> f1 = fib(n-2);
+<<<<<<< HEAD
         return (Mono.zip(f0, f1, (n0, n1)-> n0 + n1));
+=======
+        return Mono.zip(f0, f1, (n0, n1) -> n0+n1);
+>>>>>>> upstream/team-11
     }
 
 
